@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>book</title>
+</head>
+<body>
+    <button id="logoutBtn">logout</button>
+    <h1>review of book ID = <%=bookID%></h1>
+    <input id="inputField" placeholder="post a review"></input>
+    <button id="postBtn">post/update your review</button>
+    <button id="deleteBtn">delete your review</button>
+    <div id="display"><%=reviewList%></div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
+    <script>
+        window.bookID = <%=bookID%>;
+        window.reviewList = "<%=JSON.stringify(reviewList)%>";
+    </script>
+    <script src="/js/review.js"></script>
+</body>
+</html>
