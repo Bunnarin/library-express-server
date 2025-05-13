@@ -7,8 +7,7 @@ const titleInput = document.getElementById('titleInput');
 const authorInput = document.getElementById('authorInput');
 const isbnInput = document.getElementById('isbnInput');
 
-logoutBtn.addEventListener('click',() => 
-  axios.get(`http://localhost:${PORT}/user/logout`).then(window.location.href="/user").catch(err=>alert(err)));
+logoutBtn.addEventListener('click',() => axios.get(`http://localhost:${PORT}/user/logout`).then(window.location.href="/user"));
 listAllBtn.addEventListener('click',list_all_books);
 searchBtn.addEventListener('click',search_book);
 
@@ -24,7 +23,7 @@ async function search_book(){
         params: {
             title: titleInput.value,
             author: authorInput.value,
-            isbn: isbnInput.value
+            ISBN: isbnInput.value
         }
     })
     .catch(err => alert(err));

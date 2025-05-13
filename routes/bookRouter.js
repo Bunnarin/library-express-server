@@ -4,8 +4,8 @@ const router = express.Router();
 const reviewRouter = require('./reviewRouter.js');
 const jwt = require('jsonwebtoken');
 const bookList = [
-  {id: 0, title: "book1", author: "bobo", ISBN: "0"},
-  {id: 1, title: "book2", author: "naro", ISBN: "1"}
+  {id: 0, title: "book1", author: "bobo", ISBN: "00"},
+  {id: 1, title: "book2", author: "naro", ISBN: "01"}
 ];
 const key = "secret";
 
