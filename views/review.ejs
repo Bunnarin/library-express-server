@@ -12,7 +12,8 @@
     <button id="postBtn">post/update your review</button>
     <button id="deleteBtn">delete your review</button>
     <div id="display"><%=reviewList%></div>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         window.bookID = <%=bookID%>;
         window.reviewList = "<%=JSON.stringify(reviewList)%>";

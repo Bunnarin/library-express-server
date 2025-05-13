@@ -1,65 +1,68 @@
 const PORT = 3000;
-const logoutBtn = document.getElementById('logoutBtn');
-const display = document.getElementById('display');
-const listAllBtn = document.getElementById('listAllBtn');
-const searchBtn = document.getElementById('searchBtn');
-const titleInput = document.getElementById('titleInput');
-const authorInput = document.getElementById('authorInput');
-const isbnInput = document.getElementById('isbnInput');
-
-logoutBtn.addEventListener('click',() => axios.get(`http://localhost:${PORT}/user/logout`).then(window.location.href="/user"));
-listAllBtn.addEventListener('click',list_all_books);
-searchBtn.addEventListener('click',search_book);
+const logoutBtn = $('#logoutBtn');
+const display = $('#display');
+const listAllBtn = $('#listAllBtn');
+const searchBtn = $('#searchBtn');
+const titleInput = $('#titleInput');
+const authorInput = $('#authorInput');
+const isbnInput = $('#isbnInput');
+logoutBtn.on('click', () =>
+  axios.get(`http://localhost:${PORT}/user/logout`).then(window.location.href="/user"));
+listAllBtn.on('click', list_all_books);
+searchBtn.on('click', search_book);
 
 async function list_all_books(){
-    const response = await axios.get('http://localhost:3000/book/search')
+    const response = await axios.get(`http://localhost:${PORT}/book/search`);
     let bookList = response.data;
     const table = createTable(bookList);
-    display.innerHTML="";
-    display.appendChild(table);
+    display.empty();
+    display.append(table);
 }
+
 async function search_book(){
-    const response = await axios.post('http://localhost:3000/book/search',{},{
+    alert("Searching for books...");
+    const response = await axios.post(`http://localhost:${PORT}/book/search`, {}, {
         params: {
-            title: titleInput.value,
-            author: authorInput.value,
-            ISBN: isbnInput.value
+            title: titleInput.val(),
+            author: authorInput.val(),
+            ISBN: isbnInput.val()
         }
     })
     .catch(err => alert(err));
     let bookList = response.data;
+
     const table = createTable(bookList);
-    display.innerHTML="";
-    display.appendChild(table);
+    display.empty();
+    display.append(table);
 }
 
 function createTable(data) {
-    const table = document.createElement('table');
-  
+    const table = $('<table></table>');
+
     // Create table header row
-    const headerRow = table.insertRow();
-    const headers = ['Title', 'Author', 'ISBN']; 
+    const headerRow = $('<tr></tr>');
+    const headers = ['Title', 'Author', 'ISBN'];
     headers.forEach(header => {
-      const th = document.createElement('th');
-      th.textContent = header;
-      headerRow.appendChild(th);
+        const th = $('<th></th>').text(header);
+        headerRow.append(th);
     });
-  
+    table.append(headerRow);
+
     // Create table rows for each data object
     data.forEach(item => {
-      const row = table.insertRow();
-      const cells = ['title', 'author', 'ISBN']; 
-      cells.forEach(cellKey => {
-        const cell = row.insertCell();
-        if (cellKey === 'title') {
-          const link = document.createElement('a');
-          link.href = `http://localhost:${PORT}/book/review/${item.id}`; // Include bookID in the URL
-          link.textContent = item.title;
-          cell.appendChild(link);
-        } else {
-          cell.textContent = item[cellKey];
-        }
-      });
+        const row = $('<tr></tr>');
+        const cells = ['title', 'author', 'ISBN'];
+        cells.forEach(cellKey => {
+            const cell = $('<td></td>');
+            if (cellKey === 'title') {
+                const link = $('<a></a>').attr('href', `http://localhost:${PORT}/book/review/${item.id}`).text(item.title);
+                cell.append(link);
+            } else {
+                cell.text(item[cellKey]);
+            }
+            row.append(cell);
+        });
+        table.append(row);
     });
-    return table;
+    return table[0]; // Return the native DOM element
 }
